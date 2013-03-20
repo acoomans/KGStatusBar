@@ -10,9 +10,15 @@
 
 @interface KGStatusBar : UIView
 
++ (KGStatusBar*)sharedView;
 + (void)showWithStatus:(NSString*)status;
 + (void)showErrorWithStatus:(NSString*)status;
 + (void)showSuccessWithStatus:(NSString*)status;
 + (void)dismiss;
+
+- (void)showWithStatus:(NSString *)status
+              barColor:(UIColor*)barColor
+            labelColor:(UIColor*)labelColor
+             textColor:(UIColor*)textColor;
 
 @end

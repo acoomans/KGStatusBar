@@ -91,6 +91,13 @@ UIInterfaceOrientationMask UIInterfaceOrientationMaskFromOrientation(UIInterface
 }
 
 - (void)showWithStatus:(NSString *)status barColor:(UIColor*)barColor textColor:(UIColor*)textColor{
+    [self showWithStatus:status barColor:barColor labelColor:[UIColor clearColor] textColor:textColor];
+}
+
+- (void)showWithStatus:(NSString *)status
+              barColor:(UIColor*)barColor
+            labelColor:(UIColor*)labelColor
+             textColor:(UIColor*)textColor {
     if(!self.superview)
         [self.overlayWindow addSubview:self];
     [self.overlayWindow setHidden:NO];
@@ -113,6 +120,7 @@ UIInterfaceOrientationMask UIInterfaceOrientationMaskFromOrientation(UIInterface
     self.stringLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
     self.stringLabel.text = labelText;
     self.stringLabel.textColor = textColor;
+    self.stringLabel.backgroundColor = labelColor;
     [UIView animateWithDuration:0.4 animations:^{
         self.stringLabel.alpha = 1.0;
     }];
@@ -179,6 +187,17 @@ UIInterfaceOrientationMask UIInterfaceOrientationMaskFromOrientation(UIInterface
 #pragma mark - Notifications
 
 - (void)statusBarFrameOrOrientationChanged:(NSNotification *)notification {
+    self.stringLabel.alpha = 0.0;
+    
+    [UIView animateWithDuration:0.3
+                          delay:0.4
+                        options:0
+                     animations:^{
+                         self.stringLabel.alpha = 1.0;
+                     }
+                     completion:^(BOOL finished) {
+                     }];
+    
     UIInterfaceOrientation statusBarOrientation = [UIApplication sharedApplication].statusBarOrientation;
     CGFloat angle = UIInterfaceOrientationAngleOfOrientation(statusBarOrientation);
     CGSize statusBarSize = [UIApplication sharedApplication].statusBarFrame.size;
