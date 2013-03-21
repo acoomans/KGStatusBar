@@ -37,6 +37,7 @@ UIInterfaceOrientationMask UIInterfaceOrientationMaskFromOrientation(UIInterface
     @property (nonatomic, strong, readonly) UIWindow *overlayWindow;
     @property (nonatomic, strong, readonly) UIView *topBar;
     @property (nonatomic, strong) UILabel *stringLabel;
+    @property (nonatomic, assign, readwrite) BOOL hidden;
 @end
 
 @implementation KGStatusBar
@@ -86,6 +87,7 @@ UIInterfaceOrientationMask UIInterfaceOrientationMaskFromOrientation(UIInterface
         self.backgroundColor = [UIColor clearColor];
 		self.alpha = 0;
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        self.hidden = YES;
     }
     return self;
 }
@@ -100,6 +102,7 @@ UIInterfaceOrientationMask UIInterfaceOrientationMaskFromOrientation(UIInterface
              textColor:(UIColor*)textColor {
     if(!self.superview)
         [self.overlayWindow addSubview:self];
+    self.hidden = NO;
     [self.overlayWindow setHidden:NO];
     [self.topBar setHidden:NO];
     self.topBar.backgroundColor = barColor;
@@ -137,6 +140,8 @@ UIInterfaceOrientationMask UIInterfaceOrientationMaskFromOrientation(UIInterface
         
         [overlayWindow removeFromSuperview];
         overlayWindow = nil;
+        
+        self.hidden = YES;
     }];
 }
 

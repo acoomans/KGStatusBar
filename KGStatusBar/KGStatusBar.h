@@ -16,6 +16,8 @@
 + (void)showSuccessWithStatus:(NSString*)status;
 + (void)dismiss;
 
+@property (nonatomic, assign, readonly) BOOL hidden;
+
 - (void)showWithStatus:(NSString *)status
               barColor:(UIColor*)barColor
             labelColor:(UIColor*)labelColor
